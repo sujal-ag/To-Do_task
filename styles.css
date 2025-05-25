@@ -353,6 +353,10 @@ input{
   width: 100%;
 }
 
+.task1 .opr{
+  width: 100%;
+}
+
   .task .opr #box1,
   .task1 .opr #box3 {
     width: 90%;
@@ -370,11 +374,19 @@ input{
     text-align: center;
   }
 
-  ul{
+  .task ul{
+    padding: 10px;
+  } 
+
+  .task1 ul{
     padding: 10px;
   }
 
   .task span{
+    left: 105%;
+  } 
+
+  .task1 span{
     left: 105%;
   }
 }
