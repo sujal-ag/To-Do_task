@@ -42,6 +42,7 @@ function renderTasks() {
     }
   });
 
+  updateProgressCircle()
   saveData();
 }
 
@@ -55,26 +56,6 @@ function createTaskItem(text) {
   li.appendChild(span);
 
   makeDraggable(li);
-
-//   li.addEventListener("click", function (e) {
-//     if (e.target.tagName === "SPAN") return;
-
-//     const cleanText = (text+"t").trim();
-
-//     const index = allTasks.indexOf(cleanText);
-//     if (index !== -1) {
-//       allTasks.splice(index, 1);
-//       completedTasks.unshift(cleanText.slice(text));
-//       renderTasks();
-//     } else {
-//       const cIndex = completedTasks.indexOf(text);
-//       if (cIndex !== -1) {
-//         completedTasks.splice(cIndex, 1);
-//         allTasks.unshift(cleanText);
-//         renderTasks();
-//       }
-//     }
-//   });
 
   return li;
 }
@@ -161,3 +142,23 @@ function getData() {
 
 getData();
 renderTasks();
+
+
+function updateProgressCircle() {
+  const total = allTasks.length + completedTasks.length;
+  const percent = total === 0 ? 0 : (completedTasks.length / total) * 100;
+
+  const radius = 70;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (percent / 100) * circumference;
+
+  const circle = document.querySelector("svg circle");
+  if (!circle) return;
+
+  circle.style.strokeDasharray = `${circumference}`;
+  circle.style.strokeDashoffset = `${offset}`;
+
+  // Optional: Show percent text inside circle
+  const percentText = document.querySelector(".inner p");
+  if (percentText) percentText.textContent = `${Math.round(percent)}%`;
+}
