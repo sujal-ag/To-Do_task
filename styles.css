@@ -314,7 +314,7 @@ input{
 
  .section2 {
   flex: 4;
-  border: 1px solid var(--border);
+  border: 0px solid var(--border);
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -329,8 +329,9 @@ input{
   height: max-content;
   width: 90%;
   padding: 20px 30px;
-  /* padding-left: 0px; */
   margin-left: 0px;
+  /* padding-left: 0px; */
+  border-radius: 3px;
 }
 
 #box1,
