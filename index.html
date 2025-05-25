@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="./assets/favicon.png" />
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header>
+      <p><span style="color: #ff6767">Dash</span>board</p>
+    </header>
+
+    <div class="layout">
+      <section class="section1">
+        <div class="options">
+          <button class="btn clicked" id="Dashboard" onclick="clicked(this)">
+            Dashboard
+          </button>
+          <button class="btn" id="task" onclick="clicked(this)">
+            To-Do
+          </button>
+          <button class="btn" id="Completed" onclick="clicked(this)">
+            Completed
+          </button>
+          <button id="theme" onclick="clicked(this)">Theme</button>
+        </div>
+      </section>
+
+      <section class="section2">
+        <div id="hello">
+        <p id="wel" style="display: inline">Welcome👋</p>
+        <input type="text" id="add-task" placeholder="Enter task..." />
+        <button id="add-btn">
+          <span class="addtask">&plus;</span> Add Task
+        </button></div>
+        <!-- <textarea placeholder="Enter Task" class="task-input" style="display: inline;"> </textarea> -->
+        <div class="opr">
+            <div id="box3" class="box">
+            <p>Completed Task</p>
+            <p style=" margin-top: 10px" class="prev">Preview (Top 3)</p>
+            <ul id="completed-task-list" style="display: none"></ul>
+            <ul id="completed-task-list-preview"></ul>
+          </div>
+          <div id="box1" class="box" itemid="task-box">
+            <p>To-Do Tasks</p>
+            <ul id="task-list" style="display: none;"></ul>
+            <p style=" margin-top: 10px" class="prev">Preview (Top 7)</p>
+            <ul id="task-list-preview"></ul>
+          </div>
+
+          <div id="box2" class="box">
+            <p>Task Status</p>
+          </div>
+
+          
+        </div>
+      </section>
+    </div>
+
+    <script src="./index.js"></script>
+    <script src="./nav.js"></script>
+  </body>
+</html>
