@@ -1,0 +1,47 @@
+#circle {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  margin: auto;
+}
+
+/* OUTER CIRCLE */
+.outer {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  border: 2px outset rgba(0, 0, 0, 0.052);
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+}
+
+/* INNER CIRCLE */
+.inner {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border: 2px inset rgba(0, 0, 0, 0.052);
+  border-radius: 50%;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+circle{
+    fill: none;
+      stroke: url(#GradientColor);
+      stroke-width: 20px;
+}
+/* SVG CIRCLE */
+svg {
+  position: absolute;
+  top: 3px;
+  left: 2px;
+  width: 160px;
+  height: 160px;
+  stroke-dasharray: 472;
+  stroke-dashoffset: 300;
+}
