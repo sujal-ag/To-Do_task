@@ -2,10 +2,13 @@ const leftBox = document.querySelector("#box1");
 const rightBox = document.querySelector("#box3");
 const taskContainer = document.getElementById("task-list");
 const taskPreview = document.querySelector("#task-list-preview");
-const completedContainer = document.getElementById("completed-task-list");
-const completedPreview = document.querySelector("#completed-task-list-preview");
+const progressContainer = document.getElementById("progress-task-list");
+const progressPreview = document.querySelector("#progress-task-list-preview");
+const completedContainer = document.getElementById("completed-list");
+const completedPreview = document.querySelector("#completed-list-preview");
 
 let allTasks = [];
+let progressTasks = [];
 let completedTasks = [];
 let selected = null;
 
@@ -19,25 +22,38 @@ function makeDraggable(item) {
 function renderTasks() {
   taskContainer.innerHTML = "";
   taskPreview.innerHTML = "";
+  progressContainer.innerHTML = "";
+  progressPreview.innerHTML = "";
   completedContainer.innerHTML = "";
   completedPreview.innerHTML = "";
 
   allTasks.forEach((task, idx) => {
     const li = createTaskItem(task);
     taskContainer.appendChild(li);
-    if (idx < 7) {
+    if (idx < 3) {
       const previewLi = createTaskItem(task);
       taskPreview.appendChild(previewLi);
     }
   });
 
-  completedTasks.forEach((task, idx) => {
+  progressTasks.forEach((task, idx) => {
     const li = createTaskItem(task);
-    li.style.backgroundColor = "red";
-    completedContainer.appendChild(li);
+    li.style.backgroundColor = "rgb(182, 194, 19)";
+    progressContainer.appendChild(li);
     if (idx < 3) {
       const previewLi = createTaskItem(task);
-      previewLi.style.backgroundColor = "red";
+      previewLi.style.backgroundColor = "rgb(182, 194, 19)";
+      progressPreview.appendChild(previewLi);
+    }
+  });
+
+  completedTasks.forEach((task, idx) => {
+    const li = completeTaskItem(task);
+    li.style.backgroundColor = "rgba(16, 109, 16, 0.83)";
+    completedContainer.appendChild(li);
+    if (idx < 3) {
+      const previewLi = completeTaskItem(task);
+      previewLi.style.backgroundColor = "rgba(16, 109, 16, 0.83)";
       completedPreview.appendChild(previewLi);
     }
   });
@@ -55,6 +71,15 @@ function createTaskItem(text) {
   span.innerHTML = "❌";
   li.appendChild(span);
 
+  makeDraggable(li);
+
+  return li;
+}
+
+function completeTaskItem(text) {
+  const li = document.createElement("li");
+  li.textContent = text;
+  li.className = "task-item";
   makeDraggable(li);
 
   return li;
@@ -93,7 +118,7 @@ rightBox.addEventListener("drop", (e) => {
     const index = allTasks.indexOf(text);
     if (index !== -1) {
       allTasks.splice(index, 1);
-      completedTasks.unshift(text);
+      progressTasks.unshift(text);
     }
     renderTasks();
     selected = null;
@@ -104,9 +129,9 @@ leftBox.addEventListener("dragover", (e) => e.preventDefault());
 leftBox.addEventListener("drop", (e) => {
   if (selected) {
     const text = selected.textContent.replace("❌", "").trim();
-    const index = completedTasks.indexOf(text);
+    const index = progressTasks.indexOf(text);
     if (index !== -1) {
-      completedTasks.splice(index, 1);
+      progressTasks.splice(index, 1);
       allTasks.unshift(text);
     }
     renderTasks();
@@ -114,15 +139,31 @@ leftBox.addEventListener("drop", (e) => {
   }
 });
 
+const completebox = document.querySelector("#box4");
+completebox.addEventListener("dragover", (e) => e.preventDefault());
+completebox.addEventListener("drop", function(e){
+  if(selected){
+    const text = selected.textContent.replace("❌","").trim();
+    const index = progressTasks.indexOf(text);
+    if(index !== -1)
+    {
+      progressTasks.splice(index, 1);
+      completedTasks.unshift(text);
+    }
+    renderTasks();
+    selected = null;
+  }
+})
+
 document.addEventListener("click", function (e) {
   if (e.target.tagName === "SPAN") {
     const taskText = e.target.parentElement.textContent.replace("❌", "").trim();
     let index = allTasks.indexOf(taskText);
     if (index !== -1) {
       allTasks.splice(index, 1);
-    } else {
-      index = completedTasks.indexOf(taskText);
-      if (index !== -1) completedTasks.splice(index, 1);
+    } else{
+      index = progressTasks.indexOf(taskText);
+      if (index !== -1) progressTasks.splice(index, 1);
     }
     renderTasks();
   }
@@ -130,14 +171,17 @@ document.addEventListener("click", function (e) {
 
 function saveData() {
   localStorage.setItem("data1", JSON.stringify(allTasks));
-  localStorage.setItem("data2", JSON.stringify(completedTasks));
+  localStorage.setItem("data2", JSON.stringify(progressTasks));
+  localStorage.setItem("data3", JSON.stringify(completedTasks));
 }
 
 function getData() {
   const t1 = localStorage.getItem("data1");
   const t2 = localStorage.getItem("data2");
+  const t3 = localStorage.getItem("data3");
   if (t1) allTasks = JSON.parse(t1);
-  if (t2) completedTasks = JSON.parse(t2);
+  if (t2) progressTasks = JSON.parse(t2);
+  if (t3) completedTasks = JSON.parse(t3);
 }
 
 getData();
@@ -145,7 +189,7 @@ renderTasks();
 
 
 function updateProgressCircle() {
-  const total = allTasks.length + completedTasks.length;
+  const total = allTasks.length + progressTasks.length + completedTasks.length;
   const percent = total === 0 ? 0 : (completedTasks.length / total) * 100;
 
   const radius = 70;
