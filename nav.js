@@ -15,17 +15,24 @@ function clicked(btn) {
             window.open("./index.html", "_self");
         else if (btn.id == "task") {
             document.querySelector(".section2").classList.remove("task1");
+            document.querySelector(".section2").classList.remove("task2");
             document.querySelector(".section2").classList.add("task");
-            document.querySelector(".prev").remove();
             document.querySelector("#task-list").style.display = "block";
             document.querySelector("#task-list-preview").style.display = "none";
         }
-        else if (btn.id == "Completed") {
+        else if (btn.id == "progress") {
             document.querySelector(".section2").classList.remove("task");
+            document.querySelector(".section2").classList.remove("task2");
             document.querySelector(".section2").classList.add("task1");
-            document.querySelector(".prev").remove();
-            document.querySelector("#completed-task-list").style.display = "block";
-            document.querySelector("#completed-task-list-preview").style.display = "none";
+            document.querySelector("#progress-task-list").style.display = "block";
+            document.querySelector("#progress-task-list-preview").style.display = "none";
+        }
+        else if (btn.id == "completed") {
+            document.querySelector(".section2").classList.remove("task");
+            document.querySelector(".section2").classList.remove("task1");
+            document.querySelector(".section2").classList.add("task2");
+            document.querySelector("#completed-list").style.display = "block";
+            document.querySelector("#completed-list-preview").style.display = "none";
         }
 
         console.log(btn);

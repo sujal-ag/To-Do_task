@@ -71,6 +71,7 @@ function createTaskItem(text) {
   span.innerHTML = "❌";
   li.appendChild(span);
 
+  li.addEventListener("dblclick", () => handleEditTask(li, text, "all"));
   makeDraggable(li);
 
   return li;
@@ -81,9 +82,9 @@ function completeTaskItem(text) {
   li.textContent = text;
   li.className = "task-item";
   makeDraggable(li);
-
   return li;
 }
+
 
 
 const input = document.querySelector("#add-task");
@@ -106,7 +107,6 @@ function setupTaskEvents() {
 
   button.addEventListener("click", add);
 
-//   input.dataset.attached = "true";
 }
 
 input.addEventListener("focus", setupTaskEvents);
@@ -205,4 +205,31 @@ function updateProgressCircle() {
   // Optional: Show percent text inside circle
   const percentText = document.querySelector(".inner p");
   if (percentText) percentText.textContent = `${Math.round(percent)}%`;
+}
+
+
+function handleEditTask(li, oldText, listType) {
+  const input = document.createElement("input");
+  input.type = "text";
+  input.value = oldText;
+  input.className = "edit-input";
+  li.innerHTML = "";
+  li.appendChild(input);
+  input.focus();
+
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      const newText = input.value.trim();
+      if (newText !== "") {
+        let list;
+        if (listType === "all") list = allTasks;
+
+        const index = list.indexOf(oldText);
+        if (index !== -1) {
+          list[index] = newText;
+          renderTasks();
+        }
+      }
+    }
+  });
 }
