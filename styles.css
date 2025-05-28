@@ -81,6 +81,7 @@ header > p {
   background-color: var(--tertiary-color);
   border-radius: 10px;
   box-shadow: 0px 0px 5px 5px rgba(189, 179, 179, 0.219);
+  overflow: auto;
 }
 
 .opr {
@@ -258,7 +259,7 @@ input{
   height: max-content;
 }
 
-.task1 .opr {
+.task2 .opr {
   padding: 12px;
   height: max-content;
 }

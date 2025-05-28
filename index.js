@@ -1,11 +1,11 @@
 const leftBox = document.querySelector("#box1");
 const rightBox = document.querySelector("#box3");
 const taskContainer = document.getElementById("task-list");
-const taskPreview = document.querySelector("#task-list-preview");
+// const taskPreview = document.querySelector("#task-list-preview");
 const progressContainer = document.getElementById("progress-task-list");
-const progressPreview = document.querySelector("#progress-task-list-preview");
+// const progressPreview = document.querySelector("#progress-task-list-preview");
 const completedContainer = document.getElementById("completed-list");
-const completedPreview = document.querySelector("#completed-list-preview");
+// const completedPreview = document.querySelector("#completed-list-preview");
 
 let allTasks = [];
 let progressTasks = [];
@@ -21,41 +21,24 @@ function makeDraggable(item) {
 
 function renderTasks() {
   taskContainer.innerHTML = "";
-  taskPreview.innerHTML = "";
   progressContainer.innerHTML = "";
-  progressPreview.innerHTML = "";
   completedContainer.innerHTML = "";
-  completedPreview.innerHTML = "";
 
   allTasks.forEach((task, idx) => {
     const li = createTaskItem(task);
     taskContainer.appendChild(li);
-    if (idx < 3) {
-      const previewLi = createTaskItem(task);
-      taskPreview.appendChild(previewLi);
-    }
   });
 
   progressTasks.forEach((task, idx) => {
     const li = createTaskItem(task);
     li.style.backgroundColor = "rgb(182, 194, 19)";
     progressContainer.appendChild(li);
-    if (idx < 3) {
-      const previewLi = createTaskItem(task);
-      previewLi.style.backgroundColor = "rgb(182, 194, 19)";
-      progressPreview.appendChild(previewLi);
-    }
   });
 
   completedTasks.forEach((task, idx) => {
     const li = completeTaskItem(task);
     li.style.backgroundColor = "rgba(16, 109, 16, 0.83)";
     completedContainer.appendChild(li);
-    if (idx < 3) {
-      const previewLi = completeTaskItem(task);
-      previewLi.style.backgroundColor = "rgba(16, 109, 16, 0.83)";
-      completedPreview.appendChild(previewLi);
-    }
   });
 
   updateProgressCircle()
