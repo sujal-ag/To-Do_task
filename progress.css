@@ -39,7 +39,7 @@ svg {
   left: 3px;
   width: 160px;
   height: 160px;
-  transform: rotate(-90deg); /* So progress starts at the top */
+  transform: rotate(-90deg);
 }
 
 circle {
